@@ -33,6 +33,7 @@ var (
 	setupLog = ctrl.Log.WithName("setup")
 )
 
+// nolint: gochecknoinits
 func init() {
 	_ = clientgoscheme.AddToScheme(scheme)
 
@@ -59,7 +60,7 @@ func main() {
 	})
 	if err != nil {
 		setupLog.Error(err, "unable to start manager")
-		os.Exit(1)
+		os.Exit(1) // nolint: gomnd
 	}
 
 	// +kubebuilder:scaffold:builder
@@ -67,6 +68,6 @@ func main() {
 	setupLog.Info("starting manager")
 	if err := mgr.Start(ctrl.SetupSignalHandler()); err != nil {
 		setupLog.Error(err, "problem running manager")
-		os.Exit(1)
+		os.Exit(1) // nolint: gomnd
 	}
 }
