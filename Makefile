@@ -1,6 +1,10 @@
 
 # Image URL to use all building/pushing image targets
 IMG ?= github-controller:latest
+
+# Image URL to use all building/pushing image targets
+RUNNER_IMG ?= ubuntu-runner:latest
+
 # Produce CRDs that work back to Kubernetes 1.11 (no version conversion)
 CRD_OPTIONS ?= "crd:trivialVersions=true"
 
@@ -74,3 +78,25 @@ docker-build: generate lint manifests
 # Push the docker image
 docker-push:
 	docker push ${IMG}
+
+# Build the ubuntu-docker image
+ubuntu-docker:
+	docker build images/ubuntu-docker/. -t ubuntu-docker
+
+# Build the ubuntu-dind image
+ubuntu-dind: ubuntu-docker
+	docker build images/ubuntu-dind/. -t ubuntu-dind
+
+# Build the ubuntu-runner image
+ubuntu-runner: ubuntu-dind
+	docker build images/ubuntu-runner/. -t "${RUNNER_IMG}"
+
+# PUsh the ubuntu-runner image
+push-ubuntu-runner:
+	docker push "${RUNNER_IMG}"
+
+# Build the runner images
+images: ubuntu-runner
+
+# Push the runner images
+push-images: push-ubuntu-runner
