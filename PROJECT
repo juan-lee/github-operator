@@ -1,3 +1,7 @@
 domain: juan-lee.dev
 repo: github.com/juan-lee/github-operator
+resources:
+- group: github
+  kind: RunnerPool
+  version: v1beta1
 version: "2"

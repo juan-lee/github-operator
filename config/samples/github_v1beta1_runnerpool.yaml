@@ -1,0 +1,7 @@
+apiVersion: github.juan-lee.dev/v1beta1
+kind: RunnerPool
+metadata:
+  name: runnerpool-sample
+spec:
+  # Add fields here
+  foo: bar
